@@ -8,8 +8,8 @@ public class LoginPageObject extends AbstractPage {
     WebDriver driver;
 
     //Ham khoi tao
-    public LoginPageObject(WebDriver mappingDriver) {
-        driver = mappingDriver;
+    public LoginPageObject(WebDriver driver) {
+        this.driver = driver;
         System.out.println("Driver at LoginPage" + driver.toString());
     }
 

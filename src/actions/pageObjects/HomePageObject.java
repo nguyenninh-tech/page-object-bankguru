@@ -6,8 +6,8 @@ import pageUIs.HomePageUI;
 
 public class HomePageObject extends AbstractPage {
     WebDriver driver;
-    public HomePageObject(WebDriver mappingDriver) {
-        driver = mappingDriver;
+    public HomePageObject(WebDriver driver) {
+        this.driver = driver;
     }
 
     public boolean isWelcomeMessageDisplayed(String expectedText) {

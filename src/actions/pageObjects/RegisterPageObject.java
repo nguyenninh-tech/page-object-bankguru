@@ -6,8 +6,8 @@ import pageUIs.RegisterPageUI;
 
 public class RegisterPageObject extends AbstractPage {
     WebDriver driver;
-    public RegisterPageObject(WebDriver mappingDriver) {
-        driver = mappingDriver;
+    public RegisterPageObject(WebDriver driver) {
+        this.driver = driver;
     }
 
     public void inputToEmailTextbox(String email) {

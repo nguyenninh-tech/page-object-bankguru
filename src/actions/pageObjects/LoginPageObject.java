@@ -1,6 +1,7 @@
 package pageObjects;
 
 import commons.AbstractPage;
+import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
 import pageUIs.LoginPageUI;
 
@@ -17,9 +18,10 @@ public class LoginPageObject extends AbstractPage {
         return getCurrentPageUrl(driver);
     }
 
-    public void clickToHereLink() {
+    public RegisterPageObject clickToHereLink() {
         waitForElementVisible(driver, LoginPageUI.HERE_LINK);
         clickToElement(driver, LoginPageUI.HERE_LINK);
+        return PageGeneratorManager.getRegisterPage(driver);
     }
 
     public void inputToUserIDTextbox(String username) {
@@ -32,8 +34,9 @@ public class LoginPageObject extends AbstractPage {
         sendkeyToElement(driver, LoginPageUI.PASSWORD_TEXTBOX, password);
     }
 
-    public void clickToLoginButton() {
+    public HomePageObject clickToLoginButton() {
         waitForElementVisible(driver, LoginPageUI.LOGIN_BUTTON);
         clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
+        return PageGeneratorManager.getHomePage(driver);
     }
 }

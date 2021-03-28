@@ -2,7 +2,7 @@
 <suite name="BANK GURU" parallel="false">
     <test name="Run on FIREFOX">
         <classes>
-            <class name ="com.bankguru.account.Account_03_RegisterAndLogin_PageObjectPattern"/>
+            <class name ="com.bankguru.account.Account_04_RegisterAndLogin_Selenium_PageFactory"/>
         </classes>
     </test>
 </suite>

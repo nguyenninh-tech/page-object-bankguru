@@ -1,5 +1,6 @@
 package com.bankguru.account;
 
+import commons.AbtractTest;
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,7 +18,7 @@ import pageObjects.RegisterPageObject;
 
 import java.util.Random;
 
-public class Account_06_RegisterAndLogin_MultiBrowser_Parallel {
+public class Account_06_RegisterAndLogin_MultiBrowser_Parallel extends AbtractTest {
     WebDriver driver;
     String email, username, password, loginPageUrl;
     LoginPageObject loginPage;
@@ -27,39 +28,19 @@ public class Account_06_RegisterAndLogin_MultiBrowser_Parallel {
     @Parameters("browser")
     @BeforeClass
     public void beforeClass(String browserName) {
-        String rootFolder=System.getProperty("user.dir");
-       // if(browserName.equals("")) //so sanh tuyet doi
-        if(browserName.equalsIgnoreCase("firefox"))//so sanh khong phan biet hoa thuong fire=FIre
-        {
-            driver=new FirefoxDriver();
-        }
-        else if (browserName.equalsIgnoreCase("chrome"))
-        {
-            driver=new ChromeDriver();
-        }
-        else  if(browserName.equalsIgnoreCase("chromeheadless"))
-        {
-            ChromeOptions options=new ChromeOptions();
-            options.addArguments("headless");
-            options.addArguments("window-size-1920*1080");
-            driver=new ChromeDriver(options);
-        }
-        else {
-            System.out.println("Vui long chon browser name trong testng xml file");
-        }
-       // if(browserName.contains("")) //tim kiem tuong doi co phan biet hoa thuong chromeheadless=chrome        {}
+        driver = openMultiBrowser(browserName);
+        // if(browserName.contains("")) //tim kiem tuong doi co phan biet hoa thuong chromeheadless=chrome        {}
         email = "itninhnt" + randomDataTest() + "@gmail.com";
 //selenium api: xư ly triet de theo po trong bai multi browser
         System.out.println("PRE-CONDITION- STEP 1. Open bankguru Application");
-        driver.get("http://demo.guru99.com/v4/");
         loginPage = PageGeneratorManager.getLoginPage(driver);
-        System.out.println("PRE-CONDITION- STEP 2. Get Login Page Url");
-        loginPageUrl = loginPage.getLoginPageUrl();
+        System.out.println("Driver ID at TestCase = " + driver.toString());
     }
 
     @Test
     public void TC_01_RegisterToSystem() {
         System.out.println("Register - STEP: 1.Click to 'Here' link");
+        loginPageUrl = loginPage.getLoginPageUrl();
         registerPage = loginPage.clickToHereLink();
         System.out.println("Register - STEP: 2.Input to email textbox");
         registerPage.inputToEmailTextbox(email);

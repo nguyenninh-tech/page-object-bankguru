@@ -21,14 +21,14 @@ public class AbtractTest {
         } else if (browserName.equalsIgnoreCase("chromeheadless")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
-            options.addArguments("window-size-1920*1080");
+            options.addArguments("window-size="+Constants.HEADLESS_RESOLUTION);
             driver = new ChromeDriver(options);
         } else {
             System.out.println("Vui long chon browser names trong testng xml file");
         }
         System.out.println("Driver ID at Abstract Test = " + driver.toString());
-        driver.get("http://demo.guru99.com/v4/");
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(Constants.DEV_URL);
+        driver.manage().timeouts().implicitlyWait(Constants.LONG_TIMEOUT, TimeUnit.SECONDS);
         return driver;
     }
 }

@@ -1,8 +1,10 @@
 package com.bankguru.account;
 
 import commons.AbtractTest;
+import commons.Constants;
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -10,6 +12,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
+import pageObjects.NewCustomerPageObject;
 import pageObjects.RegisterPageObject;
 
 import java.util.Random;
@@ -20,16 +23,20 @@ public class Account_08_RegisterAndLogin_DynamicLocator_RestParameter extends Ab
     LoginPageObject loginPage;
     RegisterPageObject registerPage;
     HomePageObject homePage;
+    NewCustomerPageObject newCustomerPage;
 
-    @Parameters("browser")
+   // @Parameters("browser")
     @BeforeClass
-    public void beforeClass(String browserName) {
-        driver = openMultiBrowser(browserName);
+    public void beforeClass() {
+  //      driver = openMultiBrowser(browserName);
+        driver = new FirefoxDriver();
         email = "itninhnt" + randomDataTest() + "@gmail.com";
         System.out.println("PRE-CONDITION- STEP 1. Open bankguru Application");
-        loginPage = PageGeneratorManager.getLoginPage(driver);
-        System.out.println("Driver ID at TestCase = " + driver.toString());
-    }
+        driver.get(Constants.STAGING_URL);
+        loginPage= PageGeneratorManager.getLoginPage(driver);
+        System.out.println("PRE-CONDITION- STEP 2. Get Login Page Url");
+        loginPageUrl = loginPage.getLoginPageUrl();
+      }
 
     @Test
     public void TC_01_RegisterToSystem() {
@@ -62,10 +69,10 @@ public class Account_08_RegisterAndLogin_DynamicLocator_RestParameter extends Ab
 @Test
 public void TC_03_OpenMultiplePage() {
     System.out.println("Act chain-step 1.home page navigate to home page");
-    homePage = (HomePageObject) homePage.openMultiplePage(driver, "New Page");
-    System.out.println("Act chain-step 1.home page navigate to login page");
-    loginPage.openMultiplePages(driver, "login");
-    loginPage = PageGeneratorManager.getLoginPage(driver);
+    newCustomerPage=(NewCustomerPageObject) homePage.openMultiplePage(driver,"New Customer");
+    System.out.println("Act chain-step 2.New Customer Page navigate Home Page");
+    newCustomerPage.openMultiplePages(driver, "Manager");
+    homePage = PageGeneratorManager.getHomePage(driver);
 }
     @AfterClass(alwaysRun = true)
     public void afterClass() {

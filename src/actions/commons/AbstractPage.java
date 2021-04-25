@@ -92,7 +92,7 @@ public class AbstractPage {
         javascriptExecutor.executeScript("arguments[0].click;", element);
         Thread.sleep(1000);
 
-        waitExplicit = new WebDriverWait(driver, 30);
+        waitExplicit = new WebDriverWait(driver, longTimeout);
         waitExplicit.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemXpath)));
 
         elements = driver.findElements(By.xpath(allItemXpath));
@@ -291,7 +291,7 @@ public class AbstractPage {
     }
 
     public void waitForElementPresence(WebDriver driver, String locator) {
-        waitExplicit = new WebDriverWait(driver, 30);
+        waitExplicit = new WebDriverWait(driver, longTimeout);
         element = driver.findElement(By.xpath(locator));
         By byLocator = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.presenceOfElementLocated(byLocator));
@@ -299,29 +299,28 @@ public class AbstractPage {
 
     public void waitForElementVisible(WebDriver driver, String locator, String... values) {
         locator = String.format(locator, (Object[]) values);
-        waitExplicit = new WebDriverWait(driver, 30);
+        waitExplicit = new WebDriverWait(driver, longTimeout);
         element = driver.findElement(By.xpath(locator));
         By byLocator = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(byLocator));
     }
 
     public void waitForElementClickAble(WebDriver driver, String locator) {
-        waitExplicit = new WebDriverWait(driver, 30);
+        waitExplicit = new WebDriverWait(driver, longTimeout);
         element = driver.findElement(By.xpath(locator));
         By byLocator = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.elementToBeClickable(byLocator));
     }
 
     public void waitForElementInVisible(WebDriver driver, String locator) {
-        waitExplicit = new WebDriverWait(driver, 30);
+        waitExplicit = new WebDriverWait(driver, longTimeout);
         element = driver.findElement(By.xpath(locator));
         By byLocator = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byLocator));
     }
 
     //so luong<20 page
-    public AbstractPage openMultiplePage(WebDriver driver, String pageName)
-    {
+    public AbstractPage openMultiplePage(WebDriver driver, String pageName) {
         waitForElementVisible(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
         clickToElement(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
 //        if (pageName.equals("Manager")) {
@@ -333,13 +332,16 @@ public class AbstractPage {
 //
 //        }
         switch (pageName) {
-            case "Home Page":
+            case "New Customer":
+                return PageGeneratorManager.getNewCustomerPage(driver);
+            case "Deposit":
+                return PageGeneratorManager.getDeopsitPage(driver);
+            case "Manager":
                 return PageGeneratorManager.getHomePage(driver);
             default:
-                return PageGeneratorManager.getLoginPage(driver);
+                return PageGeneratorManager.getHomePage(driver);
         }
     }
-
     //so luong>20page
     public void openMultiplePages(WebDriver driver, String pageName) {
         waitForElementVisible(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
@@ -353,4 +355,6 @@ public class AbstractPage {
     private WebDriverWait waitExplicit;
     private Actions action;
     private By byLocator;
+    private int shortTimeout=5;
+    private int longTimeout=Constants.LONG_TIMEOUT;
 }

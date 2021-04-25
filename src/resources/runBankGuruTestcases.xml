@@ -3,25 +3,25 @@
     <test name="Run on FIREFOX">
         <parameter name="browser" value="firefox" />
         <classes>
-            <class name ="com.bankguru.account.Account_06_RegisterAndLogin_MultiBrowser_Parallel"/>
+            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>
         </classes>
     </test>
     <test name="Run on CHROMEA">
         <parameter name="browser" value="chrome" />
         <classes>
-            <class name ="com.bankguru.account.Account_06_RegisterAndLogin_MultiBrowser_Parallel"/>
+            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>
         </classes>
     </test>
     <test name="Run on CHROMEHEADLESS">
         <parameter name="browser" value="chromeheadless" />
         <classes>
-            <class name ="com.bankguru.account.Account_06_RegisterAndLogin_MultiBrowser_Parallel"/>
+            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>
         </classes>
     </test>
     <test name="Run on IE">
         <parameter name="browser" value="internetexplorer" />
         <classes>
-            <class name ="com.bankguru.account.Account_06_RegisterAndLogin_MultiBrowser_Parallel"/>
+            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>
         </classes>
     </test>
 </suite>

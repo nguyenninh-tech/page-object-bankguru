@@ -5,6 +5,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageUIs.AbtractPageUI;
 
 import java.util.List;
 import java.util.Set;
@@ -57,6 +58,12 @@ public class AbstractPage {
 
     /*Web Element*/
     public void clickToElement(WebDriver driver, String locator) {
+        element = driver.findElement(By.xpath(locator));
+        element.click();
+    }
+
+    public void clickToElement(WebDriver driver, String locator, String... values) {
+        locator = String.format(locator, (Object[]) values);
         element = driver.findElement(By.xpath(locator));
         element.click();
     }
@@ -135,6 +142,13 @@ public class AbstractPage {
     }
 
     public boolean isControlDisplay(WebDriver driver, String locator) {
+        element = driver.findElement(By.xpath(locator));
+        return element.isDisplayed();
+
+    }
+
+    public boolean isControlDisplay(WebDriver driver, String locator, String... values) {
+        locator = String.format(locator, (Object[]) values);
         element = driver.findElement(By.xpath(locator));
         return element.isDisplayed();
 
@@ -283,7 +297,8 @@ public class AbstractPage {
         waitExplicit.until(ExpectedConditions.presenceOfElementLocated(byLocator));
     }
 
-    public void waitForElementVisible(WebDriver driver, String locator) {
+    public void waitForElementVisible(WebDriver driver, String locator, String... values) {
+        locator = String.format(locator, (Object[]) values);
         waitExplicit = new WebDriverWait(driver, 30);
         element = driver.findElement(By.xpath(locator));
         By byLocator = By.xpath(locator);
@@ -302,6 +317,33 @@ public class AbstractPage {
         element = driver.findElement(By.xpath(locator));
         By byLocator = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byLocator));
+    }
+
+    //so luong<20 page
+    public AbstractPage openMultiplePage(WebDriver driver, String pageName)
+    {
+        waitForElementVisible(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
+        clickToElement(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
+//        if (pageName.equals("Manager")) {
+//            return PageGeneratorManager.getHomePage(driver);
+//        } else if (pageName.equals("New Account")) {
+//            return PageGeneratorManager.getRegisterPage(driver);
+//        } else {
+//            return PageGeneratorManager.getLoginPage(driver);
+//
+//        }
+        switch (pageName) {
+            case "Home Page":
+                return PageGeneratorManager.getHomePage(driver);
+            default:
+                return PageGeneratorManager.getLoginPage(driver);
+        }
+    }
+
+    //so luong>20page
+    public void openMultiplePages(WebDriver driver, String pageName) {
+        waitForElementVisible(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
+        clickToElement(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
     }
 
     private WebElement element;

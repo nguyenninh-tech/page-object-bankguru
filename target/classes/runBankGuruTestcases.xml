@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="BANK GURU" parallel="tests" thread-count="1">
+    <listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+        <listener class-name="commons.ExtentReportListener"/>
+    </listeners>
     <test name="Run on FIREFOX">
-        <parameter name="browser" value="firefox" />
+        <parameter name="browser" value="firefox"/>
         <classes>
-            <class name ="com.bankguru.account.Account_10_AssertVerify_Log_Report"/>
+            <class name="com.bankguru.account.Account_10_AssertVerify_Log_Report"/>
         </classes>
     </test>
-<!--    <test name="Run on CHROMEA">-->
-<!--        <parameter name="browser" value="chrome" />-->
-<!--        <classes>-->
-<!--            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Run on CHROMEHEADLESS">-->
-<!--        <parameter name="browser" value="chromeheadless" />-->
-<!--        <classes>-->
-<!--            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Run on IE">-->
-<!--        <parameter name="browser" value="internetexplorer" />-->
-<!--        <classes>-->
-<!--            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <!--    <test name="Run on CHROMEA">-->
+    <!--        <parameter name="browser" value="chrome" />-->
+    <!--        <classes>-->
+    <!--            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>-->
+    <!--        </classes>-->
+    <!--    </test>-->
+    <!--    <test name="Run on CHROMEHEADLESS">-->
+    <!--        <parameter name="browser" value="chromeheadless" />-->
+    <!--        <classes>-->
+    <!--            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>-->
+    <!--        </classes>-->
+    <!--    </test>-->
+    <!--    <test name="Run on IE">-->
+    <!--        <parameter name="browser" value="internetexplorer" />-->
+    <!--        <classes>-->
+    <!--            <class name ="com.bankguru.account.Account_08_RegisterAndLogin_DynamicLocator_RestParameter"/>-->
+    <!--        </classes>-->
+    <!--    </test>-->
 </suite>

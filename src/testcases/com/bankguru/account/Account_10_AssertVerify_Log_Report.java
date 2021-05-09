@@ -39,6 +39,7 @@ public class Account_10_AssertVerify_Log_Report extends AbtractTest {
 
     @Test
     public void TC_01_RegisterToSystem() {
+        log.info("register-step1 verify login");
         System.out.println("Register - STEP: 1.Click to 'Here' link");
         Assert.assertTrue(loginPage.isLoginPageDisplayed());
         loginPageUrl = loginPage.getLoginPageUrl();
@@ -54,6 +55,7 @@ public class Account_10_AssertVerify_Log_Report extends AbtractTest {
 
     @Test
     public void TC_02_LoginToSystem() {
+        log.info("login-step01 open login page again");
         System.out.println(" Login -STEP: 1.Open Login Page");
         loginPage = registerPage.openLoginPageUrl(loginPageUrl);
         Assert.assertFalse(loginPage.isLoginPageDisplayed());

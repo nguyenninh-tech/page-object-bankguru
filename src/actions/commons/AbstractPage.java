@@ -7,8 +7,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageUIs.AbtractPageUI;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class AbstractPage {
     /*Web Browser*/
@@ -145,6 +147,40 @@ public class AbstractPage {
         element = driver.findElement(By.xpath(locator));
         return element.isDisplayed();
 
+    }
+
+    public boolean isControlDisplayed(WebDriver driver, String locator, String... dynamicValue) {
+        locator = String.format(locator, (Object[]) dynamicValue);
+        element = driver.findElement(By.xpath(locator));
+        return element.isDisplayed();
+    }
+
+    public boolean isControlUnDisplayed(WebDriver driver, String locator) {
+        Date date = new Date();
+        System.out.println("Start time = " + date.toString());
+        overrideGlobalTimeout(driver, Constants.SHORT_TIMEOUT);
+        List<WebElement> elements = driver.findElements(By.xpath(locator));
+        if (elements.size() == 0) {
+            System.out.println("Element is not in DOM");
+            System.out.println("End time = " + new Date().toString());
+            overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
+            return true;
+        } else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
+            System.out.println("Element is in DOM but not visible/displayed");
+            System.out.println("End time = " + new Date().toString());
+            overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
+            return true;
+        } else {
+            System.out.println("Element is in DOM and visible");
+            overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
+            return false;
+
+        }
+
+    }
+
+    public void overrideGlobalTimeout(WebDriver driver, int timeOut) {
+        driver.manage().timeouts().implicitlyWait(timeOut, TimeUnit.SECONDS);
     }
 
     public boolean isControlDisplay(WebDriver driver, String locator, String... values) {
@@ -342,6 +378,7 @@ public class AbstractPage {
                 return PageGeneratorManager.getHomePage(driver);
         }
     }
+
     //so luong>20page
     public void openMultiplePages(WebDriver driver, String pageName) {
         waitForElementVisible(driver, AbtractPageUI.DYNAMIC_MENU_LINK, pageName);
@@ -355,6 +392,7 @@ public class AbstractPage {
     private WebDriverWait waitExplicit;
     private Actions action;
     private By byLocator;
-    private int shortTimeout=5;
-    private int longTimeout=Constants.LONG_TIMEOUT;
+    private int shortTimeout = Constants.SHORT_TIMEOUT;
+    private int longTimeout = Constants.LONG_TIMEOUT;
+
 }

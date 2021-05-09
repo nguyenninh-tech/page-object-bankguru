@@ -39,4 +39,17 @@ public class LoginPageObject extends AbstractPage {
         clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
         return PageGeneratorManager.getHomePage(driver);
     }
+
+    public boolean isLoginPageDisplayed() {
+        waitForElementVisible(driver, LoginPageUI.LOGIN_FORM);
+        return isControlDisplayed(driver, LoginPageUI.LOGIN_FORM);
+    }
+
+
+    public boolean isHomePageUnDisplayed() {
+        waitForElementInVisible(driver, LoginPageUI.WELCOM_MESSAGE_TEXT);
+        return isControlUnDisplayed(driver, LoginPageUI.WELCOM_MESSAGE_TEXT);
+    }
+
+
 }

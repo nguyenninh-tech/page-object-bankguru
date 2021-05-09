@@ -8,7 +8,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
@@ -17,13 +16,14 @@ import pageObjects.RegisterPageObject;
 
 import java.util.Random;
 
-public class Account_08_RegisterAndLogin_DynamicLocator_RestParameter extends AbtractTest {
+public class Account_10_AssertVerify_Log_Report extends AbtractTest {
     WebDriver driver;
     String email, username, password, loginPageUrl;
     LoginPageObject loginPage;
     RegisterPageObject registerPage;
     HomePageObject homePage;
     NewCustomerPageObject newCustomerPage;
+
     // @Parameters("browser")
     @BeforeClass
     public void beforeClass() {
@@ -36,9 +36,11 @@ public class Account_08_RegisterAndLogin_DynamicLocator_RestParameter extends Ab
         System.out.println("PRE-CONDITION- STEP 2. Get Login Page Url");
         loginPageUrl = loginPage.getLoginPageUrl();
     }
+
     @Test
     public void TC_01_RegisterToSystem() {
         System.out.println("Register - STEP: 1.Click to 'Here' link");
+        Assert.assertTrue(loginPage.isLoginPageDisplayed());
         loginPageUrl = loginPage.getLoginPageUrl();
         registerPage = loginPage.clickToHereLink();
         System.out.println("Register - STEP: 2.Input to email textbox");
@@ -54,6 +56,7 @@ public class Account_08_RegisterAndLogin_DynamicLocator_RestParameter extends Ab
     public void TC_02_LoginToSystem() {
         System.out.println(" Login -STEP: 1.Open Login Page");
         loginPage = registerPage.openLoginPageUrl(loginPageUrl);
+        Assert.assertFalse(loginPage.isLoginPageDisplayed());
         System.out.println(" Login -STEP: 2.Input userid & pass in textbox");
         loginPage.inputToUserIDTextbox(username);
         loginPage.inputToPasswordTextbox(password);
@@ -64,14 +67,21 @@ public class Account_08_RegisterAndLogin_DynamicLocator_RestParameter extends Ab
         System.out.println(" Login -STEP 5: Verify userid display");
         homePage.isUserIDDisplayed(username);
     }
+
     @Test
-    public void TC_03_OpenMultiplePage() {
-        System.out.println("Act chain-step 1.home page navigate to home page");
-        newCustomerPage = (NewCustomerPageObject) homePage.openMultiplePage(driver, "New Customer");
-        System.out.println("Act chain-step 2.New Customer Page navigate Home Page");
-        newCustomerPage.openMultiplePages(driver, "Manager");
-        homePage = PageGeneratorManager.getHomePage(driver);
+    public void TC_03_CheckAsssertAndVerify() {
+        System.out.println(" Login -STEP: 1.Open Login Page");
+        loginPage = registerPage.openLoginPageUrl(loginPageUrl);
+        verifyFalse(loginPage.isLoginPageDisplayed());
+        loginPage.inputToUserIDTextbox(username);
+        loginPage.inputToPasswordTextbox(password);
+        homePage = loginPage.clickToLoginButton();
+        System.out.println(" Login -STEP 4: verify welcome mess display");
+        verifyTrue(homePage.isWelcomeMessageDisplayed("Welcome To Manager's Page of Guru99 Bank"));
+        System.out.println(" Login -STEP 5: Verify userid display");
+        verifyTrue(homePage.isUserIDDisplayed(username));
     }
+
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         driver.quit();

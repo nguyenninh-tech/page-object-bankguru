@@ -20,4 +20,5 @@ public class HomePageObject extends AbstractPage {
         String actualText = getTextElement(driver, HomePageUI.USERID_TEXT);
         return actualText.contains(userID);
     }
+
 }
